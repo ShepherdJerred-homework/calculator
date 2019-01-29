@@ -212,4 +212,5 @@ iOSInjectionProject/
 
 .idea/
 *.iml
-*.xcodeproj/*
+xcuserdata/
+
