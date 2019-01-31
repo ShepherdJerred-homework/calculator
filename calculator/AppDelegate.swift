@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  calculator
-//
-//  Created by Jerred Shepherd on 2019-01-29.
-//  Copyright © 2019 Jerred Shepherd. All rights reserved.
-//
-
 import UIKit
 
 
