@@ -23,6 +23,7 @@ func append(src: Int, dest: Double) -> Double {
 }
 
 func doOp(op: Operation?, left: Double, right: Double?) throws -> Double {
+    print(left, right, op);
     switch (op ?? .ADD) {
     case .ADD:
         return left + (right ?? left);
@@ -45,6 +46,7 @@ func doOp(op: Operation?, left: Double, right: Double?) throws -> Double {
     }
 }
 
+// https://www.clear.rice.edu/comp212/06-spring/labs/13/
 protocol State {
     var display: Double { get }
 
@@ -70,6 +72,7 @@ class InitialState: State {
     func enterEqual() -> State {
         do {
             left = try doOp(op: pendingOperation, left: left, right: right);
+            display = left;
         } catch {
             return ErrorState(display: 0.0, left: 0.0, right: 0.0, pendingOperation: nil);
         }
@@ -113,14 +116,7 @@ class AccumState: State {
     }
 
     func enterOperation(_ op: Operation) -> State {
-        if pendingOperation != nil {
-            do {
-                left = try doOp(op: pendingOperation!, left: left, right: right)
-            } catch {
-                return ErrorState(display: 0.0, left: 0.0, right: 0.0, pendingOperation: nil);
-            }
-        }
-        return InitialState(display: left, left: left, right: nil, pendingOperation: pendingOperation);
+        return ComputeState(display: display, left: left, right: right, pendingOperation: op);
     }
 
     func enterDigit(_ num: Int) -> State {
